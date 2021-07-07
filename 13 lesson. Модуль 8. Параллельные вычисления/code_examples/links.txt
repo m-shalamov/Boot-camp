@@ -1,0 +1,6 @@
+http://www.moscowpython.ru/meetup/14/gil-and-python-why/
+https://habr.com/ru/post/421625/
+http://masnun.rocks/2016/10/06/async-python-the-different-forms-of-concurrency/
+https://realpython.com/intro-to-python-threading/
+https://realpython.com/python-gil/
+https://towardsdatascience.com/dive-into-queue-module-in-python-its-more-than-fifo-ce86c40944ef
