@@ -236,17 +236,17 @@ def get_data():
         "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 Safari/537.36"
     }
 
-    url = "https://www.labirint.ru/genres/2308/?available=1&paperbooks=1&display=table"
+    base_url = "https://www.labirint.ru/genres/2308/?available=1&paperbooks=1&display=table"
 
-    response = requests.get(url=url, headers=headers)
+    response = requests.get(url=base_url, headers=headers)
     soup = BeautifulSoup(response.text, "lxml")
 
     pages_count = int(soup.find("div", class_="pagination-numbers").find_all("a")[-1].text)
 
-    books_data = []
+    books = []
     for page in range(1, pages_count + 1):
     # for page in range(1, 2):
-        url = f"{url}&page={page}"
+        url = f"{base_url}&page={page}"
 
         response = requests.get(url=url, headers=headers)
         soup = BeautifulSoup(response.text, "lxml")
@@ -293,16 +293,9 @@ def get_data():
             except:
                 book_status = "Нет статуса"
 
-            # print(book_title)
-            # print(book_author)
-            # print(book_publishing)
-            # print(book_new_price)
-            # print(book_old_price)
-            # print(book_sale)
-            # print(book_status)
-            # print("#" * 10)
+        
 
-            books_data.append(
+            books.append(
                 {
                     "book_title": book_title,
                     "book_author": book_author,
@@ -333,7 +326,7 @@ def get_data():
         time.sleep(1)
 
     with open(f"data/labirint_{cur_time}.json", "w") as file:
-        json.dump(books_data, file, indent=4, ensure_ascii=False)
+        json.dump(books, file, indent=4, ensure_ascii=False)
 
 
 def main():

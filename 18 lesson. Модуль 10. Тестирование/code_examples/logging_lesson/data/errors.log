@@ -1,0 +1,8 @@
+INFO:root:try
+ERROR:root:Error with 2
+Traceback (most recent call last):
+  File "c:\data\courses\python_colvir\18. Модуль 10. Тестирование\code_examples\logging_ex.py", line 63, in <module>
+    division(number)
+  File "c:\data\courses\python_colvir\18. Модуль 10. Тестирование\code_examples\logging_ex.py", line 55, in division
+    return x / 0
+ZeroDivisionError: division by zero

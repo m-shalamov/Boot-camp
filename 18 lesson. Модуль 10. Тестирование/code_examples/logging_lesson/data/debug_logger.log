@@ -1,0 +1,10 @@
+2021-07-28 16:18:37,536 - debug_logger - DEBUG - 0, 1 = 1, 1
+2021-07-28 16:18:37,541 - debug_logger - DEBUG - 1, 1 = 1, 2
+2021-07-28 16:18:37,543 - debug_logger - DEBUG - 1, 2 = 2, 3
+2021-07-28 16:18:37,545 - debug_logger - DEBUG - 2, 3 = 3, 5
+2021-07-28 16:18:37,546 - debug_logger - DEBUG - 3, 5 = 5, 8
+2021-07-28 16:18:37,547 - debug_logger - DEBUG - 5, 8 = 8, 13
+2021-07-28 16:18:37,548 - debug_logger - DEBUG - 8, 13 = 13, 21
+2021-07-28 16:18:37,550 - debug_logger - DEBUG - 13, 21 = 21, 34
+2021-07-28 16:18:37,552 - debug_logger - DEBUG - 21, 34 = 34, 55
+2021-07-28 16:18:37,554 - debug_logger - DEBUG - 34, 55 = 55, 89

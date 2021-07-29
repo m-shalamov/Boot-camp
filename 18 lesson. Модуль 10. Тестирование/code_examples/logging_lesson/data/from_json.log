@@ -1,0 +1,10 @@
+2021-07-28 16:30:02,712 - info_log - INFO - get fibonacci (0) = 0
+2021-07-28 16:30:02,715 - info_log - INFO - get fibonacci (1) = 1
+2021-07-28 16:30:02,717 - info_log - INFO - get fibonacci (2) = 1
+2021-07-28 16:30:02,719 - info_log - INFO - get fibonacci (3) = 2
+2021-07-28 16:30:02,721 - info_log - INFO - get fibonacci (4) = 3
+2021-07-28 16:30:02,723 - info_log - INFO - get fibonacci (5) = 5
+2021-07-28 16:30:02,724 - info_log - INFO - get fibonacci (6) = 8
+2021-07-28 16:30:02,726 - info_log - INFO - get fibonacci (7) = 13
+2021-07-28 16:30:02,728 - info_log - INFO - get fibonacci (8) = 21
+2021-07-28 16:30:02,730 - info_log - INFO - get fibonacci (9) = 34
