@@ -42,7 +42,7 @@
 # obj.set_price(40000)
 ## PRACTICE
 # Для класса Employee написать @fullname.setter и @fullname.deleter,
-# который будет утсанавливать NULL значения для self.first и self.last
+# который будет устанавливать NULL значения для self.first и self.last
 # class Employee:
 
 #     def __init__(self, first, last):

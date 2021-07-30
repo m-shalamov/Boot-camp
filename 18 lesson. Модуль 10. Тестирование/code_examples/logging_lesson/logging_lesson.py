@@ -159,6 +159,72 @@
 
 # Посчитать факториалы 5 различных чисел. Добавить логирование в режиме INFO для каждого результата.
 
-# Конфигурацию для логирования загрузить из  js файла, который нужно создать.
+# Конфигурацию для логирования загрузить из  json файла, который нужно создать.
 
 # DEBUG пишет в файл, INFO пишет в другой файл и на консоль
+import json
+import logging
+import logging.config
+import random
+
+log_config = {
+    "version": 1,
+    "formatters": {
+        "my_formatter": {
+            "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        },
+    },
+    "handlers": {
+        "file_handler": {
+            "class": "logging.FileHandler",
+            "formatter": "my_formatter",
+            "filename": "my_info.log",
+            "mode":"w"
+        },
+        "file_handler1": {
+            "class": "logging.FileHandler",
+            "formatter": "my_formatter",
+            "filename": "my_debug.log",
+            "mode":"w"
+        },        
+        "cmd_handler": {
+            "class": "logging.StreamHandler",
+            "formatter": "my_formatter"
+        },
+    },
+    "loggers": {
+        "info_log": {
+            "handlers": ["file_handler", "cmd_handler"],
+            "level": "INFO",
+        },
+        "debug_log": {
+            "handlers": ["file_handler1"],
+            "level": "DEBUG",
+        }        
+    },
+}
+
+
+with open('log.json', 'w') as f:
+    json.dump(log_config, f, indent=4)
+
+
+with open('log.json') as f:
+    config = json.load(f)
+
+
+logging.config.dictConfig(config)
+log = logging.getLogger("info_log")
+log1 = logging.getLogger("debug_log")
+
+def recur_fact(n):
+    if n == 1:
+        fact = 1
+    else:
+        fact = n * recur_fact(n-1)
+    log1.debug(f"get factorial({n}) = {fact}")
+    return fact 
+
+for _ in range(5):
+    n = random.randint(1,10)
+    log.info(f"get factorial({n}) = {recur_fact(n)}")
