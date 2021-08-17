@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+    <form method = "POST" action="">
+        <div>
+            {{ form.username.label(class = "data_label")}}
+            {{ form.username(class = "data_input")}}
+        </div>
+        <div>
+            {{ form.email.label(class = "data_label")}}
+            {{ form.email(class = "data_input")}}
+        </div>
+        <div>
+            {{ form.password.label(class = "data_label")}}
+            {{ form.password(class = "data_input")}}
+        </div>
+        <div>
+            {{ form.confirm_password.label(class = "data_label")}}
+            {{ form.confirm_password(class = "data_input")}}
+        </div>
+        <div>
+            {{ form.submit(class = "data_input")}}
+        </div>
+        
+    </form>
+{% endblock %}
