@@ -1,0 +1,32 @@
+.nav {
+    background-color: coral;
+}
+
+.nav > div {
+    display: inline-block;
+}
+
+.nav ul li {
+    display: inline-block;
+    width: 100px;
+}
+
+.data_label {
+    width: 100px;
+    height: 30px;
+    color: grey;
+}
+
+.data_input {
+    width: 100px;
+    height: 30px;
+    background-color: azure;
+}
+
+.error {
+    color:red;
+}
+
+.success {
+    color: green;
+}

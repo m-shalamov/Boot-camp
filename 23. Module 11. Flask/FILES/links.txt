@@ -1,0 +1,6 @@
+https://habr.com/ru/post/181988/
+https://habr.com/ru/post/246699/
+https://www.youtube.com/watch?v=MwZwr5Tvyxo&list=PL-osiE80TeTs4UjLw5MM6OjgkjFeUxCYH&index=1
+https://stackabuse.com/deploying-a-flask-application-to-heroku/
+https://www.imaginarycloud.com/blog/flask-python/
+https://towardsdatascience.com/working-with-apis-using-flask-flask-restplus-and-swagger-ui-7cf447deda7f
