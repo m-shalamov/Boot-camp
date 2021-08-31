@@ -16,14 +16,14 @@
         <div>
             <ul>
                 <li><a href="/">Home</a></li>
-                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="/about">About</a></li>
             </ul>
         </div>
 
         <div>
             <ul>
-                <li><a href="{{ url_for('login') }}">Login</a></li>
-                <li><a href="{{ url_for('register') }}">Register</a></li>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/register">Register</a></li>
             </ul>
         </div>
     </div>
@@ -31,7 +31,7 @@
         {% with messages = get_flashed_messages(with_categories = true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                    <div class = "{{ category }}">
+                    <div class="{{ category }}">
                         {{ message }}
                     </div>
                 {% endfor %}
