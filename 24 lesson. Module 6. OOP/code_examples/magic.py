@@ -64,3 +64,41 @@ class Complex(object):
 c = Complex(2,3)
 d = Complex(5,7)
 x = d+c
+
+#################################################
+
+# class A:
+#     def __init__(self, val) -> None:
+#         self.val = val
+#     # def __add__(self, x):
+#     #     print("add")
+#     #     return A(self.val+x)
+#     def __str__(self) -> str:
+#         return f"{self.val}"
+#     def __radd__(self, x):
+#         print("radd")
+#         return A(self.val+x)
+
+# class B:
+#     def __init__(self, val) -> None:
+#         self.val = val
+#     def __str__(self) -> str:
+#         return f"{self.val}"
+#     def __radd__(self, x):
+#         print("radd")
+#         return B(self.val+x)
+# a = A(3)
+# b = B(4)
+
+# c = a+b
+# print(c)
+
+
+# a = A(3)
+# b = 4+a
+# print(b)
+
+__repr__ -> f"A({self.val})"
+__str__ 
+
+
