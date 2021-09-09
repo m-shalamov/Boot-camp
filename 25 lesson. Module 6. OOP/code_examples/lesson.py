@@ -1,3 +1,5 @@
+# https://tirinox.ru/mro-python/
+
 # class Functor:
 #     def __call__(self):
 #         print("Hello")
@@ -79,6 +81,27 @@
 # p = Pyramid(3,2)
 # print(p.area())
 # print(Pyramid.__mro__)
+class A:
+    pass
+
+
+class B:
+    pass
+
+
+class C(A, B):
+    pass
+
+
+class D(B, A):
+    pass
+
+
+class E(C, D):
+    pass
+
+
+print(E.__mro__)
 
 ##########################################################
 # class MyContainer:
