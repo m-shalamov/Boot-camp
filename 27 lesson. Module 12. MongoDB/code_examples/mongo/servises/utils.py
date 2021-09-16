@@ -4,32 +4,30 @@ from data.people import People
 from data.spyders import Spyders
 
 
+def find_account_by_email(email):
+    user = People.objects(email=email).first()
+    return user
+
+
 def create_account(name, email):
     user = People()
     user.name = name
     user.email = email
-
     user.save()
     return user
 
-
-def find_by_email(email):
-    return People.objects().filter(email=email).first()
-
-def show_cages(active_account):
-    cages = list(Cages.objects(id__in = active_account.cages_ids))
-    return cages
-
-
-def add_cage(active_account, name, price, size, allow_venomous):
+def register_cage(active_account, name, size, price, allow_venomous_spyders):
     cage = Cages()
     cage.name = name
-    cage.size = size
-    cage.allow_venomous = allow_venomous
     cage.price = price
-    
+    cage.size = size
+    cage.allow_venomous_spyders = allow_venomous_spyders
     cage.save()
-    
-    active_account.cages_ids.append(cage.id)
-    active_account.save()
+    account = find_account_by_email(active_account.email)
+    account.cage_ids.append(cage.id)
+    account.save()
     return cage
+    
+def find_cages_for_user(active_account):
+    cages = list(Cages.objects(id__in = active_account.cage_ids))
+    return cages
