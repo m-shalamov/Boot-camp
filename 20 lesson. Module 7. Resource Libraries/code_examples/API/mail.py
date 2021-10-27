@@ -7,7 +7,7 @@ from email.message import EmailMessage
 # 1
 EMAIL_ADDRESS = os.environ.get("email")
 EMAIL_PASSWORD = os.environ.get("email_pass")
-email_to = "schumixer@list.ru"
+email_to = "mail@list.ru"
 
 # with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
 # with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
