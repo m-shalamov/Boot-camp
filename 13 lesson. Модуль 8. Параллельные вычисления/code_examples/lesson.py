@@ -249,15 +249,6 @@
 # t2.join()
 # print(deposit)
 
-
-
-
-
-
-
-
-
-
 ###_6(Queue downloading example)
 # import queue
 # import threading
