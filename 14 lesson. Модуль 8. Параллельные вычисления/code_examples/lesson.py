@@ -1,5 +1,117 @@
 ###_1(Queue)
 
+###_6(Queue downloading example)
+# import queue
+# import threading
+# import random
+# import requests
+# import time
+
+
+# def save_image(id, url):
+#     with open(f"data\\pic{id}.jpg", "wb") as image:
+#         response = requests.get(url)
+#         image.write(response.content)
+#         # for block in response.iter_content(1024):
+#         #     if not block:
+#         #         break
+#         #     image.write(block)
+
+
+# def consumer(q):
+#     while True:
+#         try:
+#             id = q.get(timeout = 0.1)
+#             result = requests.get(f"https://jsonplaceholder.typicode.com/photos/{id}")
+#             url = result.json()["thumbnailUrl"]
+#             save_image(id, url)
+#             print(f"Save image {id}")
+#         except queue.Empty:
+#             if not any(producer.is_alive() for producer in producers):
+#                 break
+
+
+# def producer(q, arr):
+#     for i in range(len(arr)):
+#         id = random.choice(arr)
+#         arr.remove(id)
+#         q.put(id)
+
+# NUM_CUNSOMERS = 16
+# NUM_PRODUCERS = 2
+# q = queue.Queue()
+# workers = []
+# producers = []
+# arr_1 = [item for item in range(1, 101)]
+# arr_2 = [item for item in range(101, 201)]
+# arr = [arr_1, arr_2]
+
+
+
+# for i in range(NUM_CUNSOMERS):
+#     worker = threading.Thread(target=consumer, args=(q,))
+#     worker.start()
+#     workers.append(worker)
+
+# for i in range(NUM_PRODUCERS):
+#     worker = threading.Thread(target=producer, args=(q,arr[i]))
+#     worker.start()
+#     producers.append(worker)
+
+
+# for w in workers:
+#     w.join()
+
+# for w in producers:
+#     w.join()
+######################################################################
+# from queue import Queue
+
+# def do_stuff(q):
+#     while not q.empty():
+#         print (q.get())
+#         q.task_done()
+
+# q = Queue(maxsize=0)
+
+# for x in range(20):
+#     q.put(x)
+
+# do_stuff(q)
+####################################
+# from queue import Queue
+# import queue
+# from threading import Thread
+
+# def do_stuff(q):
+#     while True:
+#         try:
+#             print(q.get(timeout = 0.1))
+#             q.task_done()
+#         except queue.Empty:
+#             break
+# q = Queue(maxsize=0)
+# num_threads = 10
+
+# for i in range(num_threads):
+#     worker = Thread(target=do_stuff, args=(q,))
+#     # worker.setDaemon(True)
+#     worker.start()
+
+# for x in range(100):
+#     q.put(x)
+
+# q.join()
+# print("end")
+#################################################################
+
+
+
+
+
+
+
+
 
 # import queue
 # import random
@@ -368,301 +480,3 @@
 
 #     game.start()
 #     game.join()
-
-
-###_5(Futures)
-# from concurrent.futures import ThreadPoolExecutor
-# import threading
-# import random
-
-# def task():
-#     print('Executing our Task')
-#     result = 0
-#     i = 0
-#     for i in range(10):
-#         result = result + i
-#     print('I: {}'.format(result))
-#     print('Task Executed {}'.format(threading.current_thread()))
-
-# def main():
-#     executor = ThreadPoolExecutor(max_workers=3)
-#     task1 = executor.submit(task)
-#     task2 = executor.submit(task)
-
-# if __name__ == '__main__':
-#     main()
-#######################################################################
-# from concurrent.futures import ThreadPoolExecutor
-
-# def task(n):
-#     print('Processing {}'.format(n))
-
-# def main():
-#     print('Starting ThreadPoolExecutor')
-#     with ThreadPoolExecutor(max_workers=3) as executor:
-#         future = executor.submit(task, (2))
-#         future = executor.submit(task, (3))
-#         future = executor.submit(task, (4))
-#     print('All tasks complete')
-
-# if __name__ == '__main__':
-#     main()
-#######################################################
-# import time
-# import requests
-# from concurrent.futures import ThreadPoolExecutor, as_completed
-
-# URLS = [
-# 'https://mail.ru/',
-# 'https://realpython.com/python-concurrency/',
-# 'https://www.bbc.com/sport/football',
-# 'https://www.marvel.com/',
-# ]
-
-# def checkStatus(url):
-#     print('Attempting to crawl URL: {}'.format(url))
-#     response = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
-#     return (response.status_code, url)
-
-# def printStatus(statusCode):
-#     print('URL Crawled with status code: {}'.format(statusCode))
-
-# def main():
-#     with ThreadPoolExecutor(max_workers=3) as executor:
-
-#         tasks = []
-#         for url in URLS:
-#             task = executor.submit(checkStatus, url)
-#             tasks.append(task)
-
-#         for result in as_completed(tasks):
-#             printStatus(result.result())
-
-# if __name__ == '__main__':
-#     main()
-###########################################################
-
-# from concurrent.futures import ThreadPoolExecutor
-
-# values = [2,3,4,5,6,7,8]
-
-# def multiplyByTwo(n):
-#     return 2 * n
-
-# def main():
-#     with ThreadPoolExecutor(max_workers=3) as executor:
-#         results = executor.map(multiplyByTwo, values)
-
-#     for result in results:
-#         print(result)
-
-# if __name__ == '__main__':
-#     main()
-
-############################################################
-# from concurrent.futures import ThreadPoolExecutor
-
-# def task(n):
-#     print('Processing {}'.format(n))
-
-# def taskDone(fn):
-#     if fn.cancelled():
-#         print('Our {} Future has been cancelled'.format(fn.arg))
-#     elif fn.done():
-#         print('Our Task has completed')
-
-# def main():
-#     print('Starting ThreadPoolExecutor')
-#     with ThreadPoolExecutor(max_workers=3) as executor:
-#         future = executor.submit(task, (2))
-#         future.add_done_callback(taskDone)
-
-#     print('All tasks complete')
-
-# if __name__ == '__main__':
-#     main()
-##################################################################
-# INTEGRATING
-
-# import math
-# import timeit
-# import time
-# from threading import Thread
-# from functools import partial
-# from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor, as_completed
-
-
-# a = 0
-# b = math.pi/2
-# n_jobs = 8
-# # f = lambda x:  2
-# def f(x): return math.cos(x)
-# # f = math.cos
-# n_iter = 10000000
-
-
-# def integrate(f, a, b, *, n_iter=n_iter):
-#     acc = 0
-#     step = (b - a) / n_iter
-#     for i in range(n_iter):
-#         acc += f(a + i * step) * step
-#     return acc
-
-
-# def integrate_thread(f, a, b, *, n_jobs, n_iter=n_iter):
-#     executor = ThreadPoolExecutor(max_workers=n_jobs)
-#     submit = partial(executor.submit, integrate, f, n_iter=n_iter // n_jobs)
-#     step = (b - a) / n_jobs
-#     fs = [submit(a + i * step, a + (i + 1) * step) for i in range(n_jobs)]
-#     return sum(item.result() for item in as_completed(fs))
-
-
-# def integrate_process(f, a, b, *, n_jobs, n_iter=n_iter):
-#     executor = ProcessPoolExecutor(max_workers=n_jobs)
-#     submit = partial(executor.submit, integrate, f, n_iter=n_iter // n_jobs)
-#     step = (b - a) / n_jobs
-#     fs = [submit(a + i * step, a + (i + 1) * step) for i in range(n_jobs)]
-#     return sum(item.result() for item in as_completed(fs))
-
-
-# def main():
-
-#     integrate_partial_1 = partial(integrate, f=f, a=a, b=b)
-#     # print(timeit.repeat(integrate_partial_1, number=100))
-#     t = time.time()
-#     print(integrate_partial_1())
-#     print(time.time() - t)
-    
-    
-#     integrate_partial_2 = partial(integrate_thread, f=f, a=a, b=b, n_jobs=n_jobs)
-#     t = time.time()
-#     print(integrate_partial_2())
-#     print(time.time() - t)
-#     # print(timeit.repeat(integrate_partial_2, number=100))
-
-#     integrate_partial_3 = partial(integrate_process, f=f, a=a, b=b, n_jobs=n_jobs)
-#     t = time.time()
-#     print(integrate_partial_3())
-#     print(time.time() - t)
-#     # print(timeit.repeat(integrate_partial_3, number=100))
-
-# if __name__ == "__main__":
-#     main()
-####################################################
-
-# PRACTICE
-# import timeit
-# from concurrent.futures import ThreadPoolExecutor
-# from concurrent.futures import ProcessPoolExecutor
-# import math
-
-# PRIMES = [
-#     112272535095293,
-#     112582705942171,
-#     112272535095293,
-#     115280095190773,
-#     115797848077099,
-#     1099726899285419,
-# ]
-
-
-# def is_prime(n):
-#     if n % 2 == 0:
-#         return False
-
-#     sqrt_n = int(math.floor(math.sqrt(n)))
-#     for i in range(3, sqrt_n + 1, 2):
-#         if n % i == 0:
-#             return False
-#     return True
-
-
-# def main():
-
-#     t1 = timeit.default_timer()
-#     with ProcessPoolExecutor(max_workers=4) as executor:
-#         for number, prime in zip(PRIMES, executor.map(is_prime, PRIMES)):
-#             print("%d is prime: %s" % (number, prime))
-
-#     print(
-#         "{} Seconds Needed for ProcessPoolExecutor".format(timeit.default_timer() - t1)
-#     )
-    
-    
-    
-#     t2 = timeit.default_timer()
-#     with ThreadPoolExecutor(max_workers=4) as executor:
-#         for number, prime in zip(PRIMES, executor.map(is_prime, PRIMES)):
-#             print("%d is prime: %s" % (number, prime))
-#     print(
-#         "{} Seconds Needed for ThreadPoolExecutor".format(timeit.default_timer() - t2)
-#     )
-    
-    
-#     t3 = timeit.default_timer()
-#     for number in PRIMES:
-#         isPrime = is_prime(number)
-#         print("{} is prime: {}".format(number, isPrime))
-#     print(
-#         "{} Seconds needed for single threaded execution".format(
-#             timeit.default_timer() - t3
-#         )
-#     )
-
-
-# if __name__ == "__main__":
-#     main()
-
-
-###_10(Integrating)
-# import math
-# import timeit
-# from threading import Thread
-# from functools import partial
-
-
-# def integrate(f, a, b, *, n_iter=10000):
-#     acc = 0
-#     step = (b - a) / n_iter
-#     for i in range(n_iter):
-#         acc += f(a + i * step) * step
-#     return acc
-
-# def integrate_conc(f, a, b, data, num_of_thread, *, n_iter, n_threads):
-#     acc = 0
-#     step = (b - a) / n_iter
-#     k = num_of_thread
-#     for i in range(n_iter//n_threads):
-#         acc += f(a + k * step) * step
-#         k+=n_threads
-#     data[num_of_thread] = acc
-
-
-# def integrate_threads(f, a, b, *, n_threads=10, n_iter=1000):
-#     data = {}
-#     threads = [
-#         Thread(
-#             target=partial(
-#                 integrate_conc, f=f, a=a, b=b, data = data, num_of_thread = i, n_iter=n_iter,  n_threads = n_threads
-#             )
-#         )
-#         for i in range(n_threads)
-#     ]
-
-
-#     for thread in threads:
-#         thread.start()
-
-#     for thread in threads:
-#         thread.join()
-#     return sum(data.values())
-
-# integrate = partial(integrate, f=math.cos, a=0, b=math.pi / 2)
-# integrate_threads = partial(integrate_threads, f=math.cos, a=0, b=math.pi / 2)
-
-# # print(integrate_threads(f=math.cos, a=-math.pi / 2, b=math.pi / 2))
-# # print(integrate(f=math.cos, a=-math.pi / 2, b=math.pi / 2))
-# print(timeit.repeat(integrate, number=1000))
-# print(timeit.repeat(integrate_threads, number=1000))
-
-
