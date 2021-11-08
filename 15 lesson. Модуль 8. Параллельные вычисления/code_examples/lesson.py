@@ -1,3 +1,297 @@
+###_5(Futures)
+# from concurrent.futures import ThreadPoolExecutor
+# import threading
+# import random
+
+# def task():
+#     print('Executing our Task')
+#     result = 0
+#     i = 0
+#     for i in range(10):
+#         result = result + i
+#     print('I: {}'.format(result))
+#     print('Task Executed {}'.format(threading.current_thread()))
+
+# def main():
+#     executor = ThreadPoolExecutor(max_workers=3)
+#     task1 = executor.submit(task)
+#     task2 = executor.submit(task)
+
+# if __name__ == '__main__':
+#     main()
+#######################################################################
+# from concurrent.futures import ThreadPoolExecutor
+
+# def task(n):
+#     print('Processing {}'.format(n))
+
+# def main():
+#     print('Starting ThreadPoolExecutor')
+#     with ThreadPoolExecutor(max_workers=3) as executor:
+#         future = executor.submit(task, (2))
+#         future = executor.submit(task, (3))
+#         future = executor.submit(task, (4))
+#     print('All tasks complete')
+
+# if __name__ == '__main__':
+#     main()
+#######################################################
+# import time
+# import requests
+# from concurrent.futures import ThreadPoolExecutor, as_completed
+
+# URLS = [
+# 'https://mail.ru/',
+# 'https://realpython.com/python-concurrency/',
+# 'https://www.bbc.com/sport/football',
+# 'https://www.marvel.com/',
+# ]
+
+# def checkStatus(url):
+#     print('Attempting to crawl URL: {}'.format(url))
+#     response = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
+#     return (response.status_code, url)
+
+# def printStatus(statusCode):
+#     print('URL Crawled with status code: {}'.format(statusCode))
+
+# def main():
+#     with ThreadPoolExecutor(max_workers=3) as executor:
+
+#         tasks = []
+#         for url in URLS:
+#             task = executor.submit(checkStatus, url)
+#             tasks.append(task)
+
+#         for result in as_completed(tasks):
+#             printStatus(result.result())
+
+# if __name__ == '__main__':
+#     main()
+###########################################################
+
+# from concurrent.futures import ThreadPoolExecutor
+
+# values = [2,3,4,5,6,7,8]
+
+# def multiplyByTwo(n):
+#     return 2 * n
+
+# def main():
+#     with ThreadPoolExecutor(max_workers=3) as executor:
+#         results = executor.map(multiplyByTwo, values)
+
+#     for result in results:
+#         print(result)
+
+# if __name__ == '__main__':
+#     main()
+
+############################################################
+# from concurrent.futures import ThreadPoolExecutor
+
+# def task(n):
+#     print('Processing {}'.format(n))
+
+# def taskDone(fn):
+#     if fn.cancelled():
+#         print('Our {} Future has been cancelled'.format(fn.arg))
+#     elif fn.done():
+#         print('Our Task has completed')
+
+# def main():
+#     print('Starting ThreadPoolExecutor')
+#     with ThreadPoolExecutor(max_workers=3) as executor:
+#         future = executor.submit(task, (2))
+#         future.add_done_callback(taskDone)
+
+#     print('All tasks complete')
+
+# if __name__ == '__main__':
+#     main()
+##################################################################
+# INTEGRATING
+
+# import math
+# import timeit
+# import time
+# from threading import Thread
+# from functools import partial
+# from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor, as_completed
+
+
+# a = 0
+# b = math.pi/2
+# n_jobs = 8
+# # f = lambda x:  2
+# def f(x): return math.cos(x)
+# # f = math.cos
+# n_iter = 10000000
+
+
+# def integrate(f, a, b, *, n_iter=n_iter):
+#     acc = 0
+#     step = (b - a) / n_iter
+#     for i in range(n_iter):
+#         acc += f(a + i * step) * step
+#     return acc
+
+
+# def integrate_thread(f, a, b, *, n_jobs, n_iter=n_iter):
+#     executor = ThreadPoolExecutor(max_workers=n_jobs)
+#     submit = partial(executor.submit, integrate, f, n_iter=n_iter // n_jobs)
+#     step = (b - a) / n_jobs
+#     fs = [submit(a + i * step, a + (i + 1) * step) for i in range(n_jobs)]
+#     return sum(item.result() for item in as_completed(fs))
+
+
+# def integrate_process(f, a, b, *, n_jobs, n_iter=n_iter):
+#     executor = ProcessPoolExecutor(max_workers=n_jobs)
+#     submit = partial(executor.submit, integrate, f, n_iter=n_iter // n_jobs)
+#     step = (b - a) / n_jobs
+#     fs = [submit(a + i * step, a + (i + 1) * step) for i in range(n_jobs)]
+#     return sum(item.result() for item in as_completed(fs))
+
+
+# def main():
+
+#     integrate_partial_1 = partial(integrate, f=f, a=a, b=b)
+#     # print(timeit.repeat(integrate_partial_1, number=100))
+#     t = time.time()
+#     print(integrate_partial_1())
+#     print(time.time() - t)
+    
+    
+#     integrate_partial_2 = partial(integrate_thread, f=f, a=a, b=b, n_jobs=n_jobs)
+#     t = time.time()
+#     print(integrate_partial_2())
+#     print(time.time() - t)
+#     # print(timeit.repeat(integrate_partial_2, number=100))
+
+#     integrate_partial_3 = partial(integrate_process, f=f, a=a, b=b, n_jobs=n_jobs)
+#     t = time.time()
+#     print(integrate_partial_3())
+#     print(time.time() - t)
+#     # print(timeit.repeat(integrate_partial_3, number=100))
+
+# if __name__ == "__main__":
+#     main()
+####################################################
+
+# PRACTICE
+# import timeit
+# from concurrent.futures import ThreadPoolExecutor
+# from concurrent.futures import ProcessPoolExecutor
+# import math
+
+# PRIMES = [
+#     112272535095293,
+#     112582705942171,
+#     112272535095293,
+#     115280095190773,
+#     115797848077099,
+#     1099726899285419,
+# ]
+
+
+# def is_prime(n):
+#     if n % 2 == 0:
+#         return False
+
+#     sqrt_n = int(math.floor(math.sqrt(n)))
+#     for i in range(3, sqrt_n + 1, 2):
+#         if n % i == 0:
+#             return False
+#     return True
+
+
+# def main():
+
+#     t1 = timeit.default_timer()
+#     with ProcessPoolExecutor(max_workers=4) as executor:
+#         for number, prime in zip(PRIMES, executor.map(is_prime, PRIMES)):
+#             print("%d is prime: %s" % (number, prime))
+
+#     print(
+#         "{} Seconds Needed for ProcessPoolExecutor".format(timeit.default_timer() - t1)
+#     )
+    
+    
+    
+#     t2 = timeit.default_timer()
+#     with ThreadPoolExecutor(max_workers=4) as executor:
+#         for number, prime in zip(PRIMES, executor.map(is_prime, PRIMES)):
+#             print("%d is prime: %s" % (number, prime))
+#     print(
+#         "{} Seconds Needed for ThreadPoolExecutor".format(timeit.default_timer() - t2)
+#     )
+    
+    
+#     t3 = timeit.default_timer()
+#     for number in PRIMES:
+#         isPrime = is_prime(number)
+#         print("{} is prime: {}".format(number, isPrime))
+#     print(
+#         "{} Seconds needed for single threaded execution".format(
+#             timeit.default_timer() - t3
+#         )
+#     )
+
+
+# if __name__ == "__main__":
+#     main()
+
+
+###_10(Integrating)
+# import math
+# import timeit
+# from threading import Thread
+# from functools import partial
+
+
+# def integrate(f, a, b, *, n_iter=10000):
+#     acc = 0
+#     step = (b - a) / n_iter
+#     for i in range(n_iter):
+#         acc += f(a + i * step) * step
+#     return acc
+
+# def integrate_conc(f, a, b, data, num_of_thread, *, n_iter, n_threads):
+#     acc = 0
+#     step = (b - a) / n_iter
+#     k = num_of_thread
+#     for i in range(n_iter//n_threads):
+#         acc += f(a + k * step) * step
+#         k+=n_threads
+#     data[num_of_thread] = acc
+
+
+# def integrate_threads(f, a, b, *, n_threads=10, n_iter=1000):
+#     data = {}
+#     threads = [
+#         Thread(
+#             target=partial(
+#                 integrate_conc, f=f, a=a, b=b, data = data, num_of_thread = i, n_iter=n_iter,  n_threads = n_threads
+#             )
+#         )
+#         for i in range(n_threads)
+#     ]
+
+
+#     for thread in threads:
+#         thread.start()
+
+#     for thread in threads:
+#         thread.join()
+#     return sum(data.values())
+
+# integrate = partial(integrate, f=math.cos, a=0, b=math.pi / 2)
+# integrate_threads = partial(integrate_threads, f=math.cos, a=0, b=math.pi / 2)
+
+# # print(integrate_threads(f=math.cos, a=-math.pi / 2, b=math.pi / 2))
+# # print(integrate(f=math.cos, a=-math.pi / 2, b=math.pi / 2))
+# print(timeit.repeat(integrate, number=1000))
+# print(timeit.repeat(integrate_threads, number=1000))
 #ASYNCIO EX###########################################################
 # import asyncio
 # import time 
@@ -118,222 +412,3 @@
 #     end = time.perf_counter() - start
 #     print(f"Program finished in {end:0.2f} seconds.")
 
-
-
-
-
-
-
-
-
-
-
-#queue##############################
-
-# import asyncio
-# import random
-# import time
-
-# async def makeitem(size: int = 5) -> str:
-#     return str(random.randint(0, size))
-
-# async def randsleep(caller=None) -> None:
-#     i = random.randint(0, 10)
-#     if caller:
-#         print(f"{caller} sleeping for {i} seconds.")
-#     await asyncio.sleep(i)
-
-# async def produce(name: int, q: asyncio.Queue) -> None:
-#     n = random.randint(0, 10)
-#     for _ in range(n):  # Synchronous loop for each single producer
-#         await randsleep(caller=f"Producer {name}")
-#         i = await makeitem()
-#         t = time.perf_counter()
-#         await q.put((i, t))
-#         print(f"Producer {name} added <{i}> to queue.")
-
-# async def consume(name: int, q: asyncio.Queue) -> None:
-#     while True:
-#         await randsleep(caller=f"Consumer {name}")
-#         i, t = await q.get()
-#         now = time.perf_counter()
-#         print(f"Consumer {name} got element <{i}>"
-#               f" in {now-t:0.5f} seconds.")
-#         q.task_done()
-
-# async def main(nprod: int, ncon: int):
-#     q = asyncio.Queue()
-#     #create_task does just the submitting, it should have probably been called start_coroutine or something like that.
-#     producers = [asyncio.create_task(produce(n, q)) for n in range(nprod)]
-#     consumers = [asyncio.create_task(consume(n, q)) for n in range(ncon)]
-#     # asyncio.gather is not the only way to achieve concurrency in asyncio.
-#     # It's just a utility function that makes it easier to wait for a number of coroutines to all complete, and submit them to the event loop at the same time.
-#     await asyncio.gather(*producers)
-#     await q.join()  # Implicitly awaits consumers, too
-#     for c in consumers:
-#         c.cancel()
-
-# if __name__ == "__main__":
-#     random.seed(444)
-#     start = time.perf_counter()
-#     asyncio.run(main(nprod=5, ncon=10))
-#     elapsed = time.perf_counter() - start
-#     print(f"Program completed in {elapsed:0.5f} seconds.")
-
-
-
-
-
-
-
-###########################################
-# from queue import  Queue
-# q = Queue()
-# q.put(3)
-# q.get()
-# q.put(44)
-# q.task_done()
-
-
-
-
-
-
-
-
-#PARSING SYNC###########################################
-import json
-import time
-import requests
-from bs4 import BeautifulSoup
-import datetime
-import csv
-
-
-start_time = time.time()
-
-
-def get_data():
-    cur_time = datetime.datetime.now().strftime("%d_%m_%Y_%H_%M")
-
-    with open(f"data/labirint_{cur_time}.csv", "w", newline="") as file:
-        writer = csv.writer(file)
-
-        writer.writerow(
-            (
-                "Название книги",
-                "Автор",
-                "Издательство",
-                "Цена со скидкой",
-                "Цена без скидки",
-                "Процент скидки",
-                "Наличие на складе"
-            )
-        )
-
-    headers = {
-        "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 Safari/537.36"
-    }
-
-    base_url = "https://www.labirint.ru/genres/2308/?available=1&paperbooks=1&display=table"
-
-    response = requests.get(url=base_url, headers=headers)
-    soup = BeautifulSoup(response.text, "lxml")
-
-    pages_count = int(soup.find("div", class_="pagination-numbers").find_all("a")[-1].text)
-
-    books = []
-    for page in range(1, pages_count + 1):
-    # for page in range(1, 2):
-        url = f"{base_url}&page={page}"
-
-        response = requests.get(url=url, headers=headers)
-        soup = BeautifulSoup(response.text, "lxml")
-
-        books_items = soup.find("tbody", class_="products-table__body").find_all("tr")
-
-        for bi in books_items:
-            book_data = bi.find_all("td")
-
-            try:
-                book_title = book_data[0].find("a").text.strip()
-            except:
-                book_title = "Нет названия книги"
-
-            try:
-                book_author = book_data[1].text.strip()
-            except:
-                book_author = "Нет автора"
-
-            try:
-                # book_publishing = book_data[2].text
-                book_publishing = book_data[2].find_all("a")
-                book_publishing = ":".join([bp.text for bp in book_publishing])
-            except:
-                book_publishing = "Нет издательства"
-
-            try:
-                book_new_price = int(book_data[3].find("div", class_="price").find("span").find("span").text.strip().replace(" ", ""))
-            except:
-                book_new_price = "Нет нового прайса"
-
-            try:
-                book_old_price = int(book_data[3].find("span", class_="price-gray").text.strip().replace(" ", ""))
-            except:
-                book_old_price = "Нет старого прайса"
-
-            try:
-                book_sale = round(((book_old_price - book_new_price) / book_old_price) * 100)
-            except:
-                book_sale = "Нет скидки"
-
-            try:
-                book_status = book_data[-1].text.strip()
-            except:
-                book_status = "Нет статуса"
-
-        
-
-            books.append(
-                {
-                    "book_title": book_title,
-                    "book_author": book_author,
-                    "book_publishing": book_publishing,
-                    "book_new_price": book_new_price,
-                    "book_old_price": book_old_price,
-                    "book_sale": book_sale,
-                    "book_status": book_status
-                }
-            )
-
-            with open(f"data/labirint_{cur_time}.csv", "a", newline="") as file:
-                writer = csv.writer(file)
-
-                writer.writerow(
-                    (
-                        book_title,
-                        book_author,
-                        book_publishing,
-                        book_new_price,
-                        book_old_price,
-                        book_sale,
-                        book_status
-                    )
-                )
-
-        print(f"Обработана {page}/{pages_count}")
-        time.sleep(1)
-
-    with open(f"data/labirint_{cur_time}.json", "w") as file:
-        json.dump(books, file, indent=4, ensure_ascii=False)
-
-
-def main():
-    get_data()
-    finish_time = time.time() - start_time
-    print(f"Затраченное на работу скрипта время: {finish_time}")
-
-
-if __name__ == '__main__':
-    main()
