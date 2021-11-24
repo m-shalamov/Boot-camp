@@ -1,0 +1,8 @@
+version: '3.5'
+services:
+  app:
+    build: .
+    volumes:
+      - my_volume:/code/volumes
+volumes:
+  my_volume:
