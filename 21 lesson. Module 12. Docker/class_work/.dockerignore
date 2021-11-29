@@ -1,0 +1,8 @@
+__pycache__/
+.vscode/
+env/
+.dockerignore
+docker-compose.yml
+Dockerfile
+site.db
+.mypy_cache/
