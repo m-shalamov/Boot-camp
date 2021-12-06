@@ -1,0 +1,38 @@
+stages:
+  - test
+  - build
+  - deploy
+variables:
+  DOCKER_IMAGE: schumixer/p3
+
+testing:
+  image: python:3.8.0-slim
+  stage: test
+  before_script:
+    - pip install -r ./api/requirements.txt
+  script:
+    - pytest ./api/test_application.py
+
+build:
+  image: docker:latest
+  services:
+    - docker:dind
+  stage: build
+  before_script:
+    - docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
+    - cd api
+  script:
+    - docker build -t $DOCKER_IMAGE:latest .
+    - docker push $DOCKER_IMAGE:latest
+
+deploy:
+  stage: deploy
+  before_script:
+    - docker pull $DOCKER_IMAGE
+  script:
+    - docker-compose down || true
+    - docker rmi -f $DOCKER_IMAGE || true
+    - docker-compose up -d
+    - echo "App deployed"
+  tags:
+    - local
