@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  rabbit:
+    image: rabbitmq:3-management
+    restart: always
+    ports:
+      - 15672:15672
+      - 5672:5672
+    environment:
+      RABBITMQ_DEFAULT_PASS: "1234"
+      RABBITMQ_DEFAULT_USER: "user"
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - 6379:6379
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    restart: always
+    environment:
+      - REDIS_HOSTS=redis
+      - HTTP_USER=user
+      - HTTP_PASSWORD=1234
+    ports:
+      - 8081:8081
