@@ -1,0 +1,9 @@
+{% for message in get_flashed_messages() %}
+<p>{{message}}</p>
+{%endfor%}
+<form method="post">
+    EMAIL: <input type="email" name="email">
+    MESSAGE: <textarea name="message"></textarea>
+    DURATION: <input type="text" name="duration" placeholder="Enter duration in seconds">
+    <button type="submit">SUBMIT</button>
+</form>
